@@ -9,16 +9,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import com.homelane.notetaking.Injection;
+import com.homelane.notetaking.MyApplication;
 import com.homelane.notetaking.R;
 import com.homelane.notetaking.ViewModelHolder;
 import com.homelane.notetaking.addnote.AddEditNoteActivity;
 import com.homelane.notetaking.data.Note;
+import com.homelane.notetaking.data.source.NotesRepository;
 import com.homelane.notetaking.databinding.ActivityAllNotesBinding;
 import com.homelane.notetaking.util.ActivityUtils;
 import com.homelane.notetaking.util.SnackbarUtils;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import static com.homelane.notetaking.addnote.AddEditNoteActivity.ARGUMENT_EDIT_NOTE_ID;
 
@@ -29,10 +32,13 @@ public class AllNotesActivity extends AppCompatActivity {
     private AllNotesViewModel allNotesViewModel;
     private Observable.OnPropertyChangedCallback snackbarCallback;
     private Observable.OnPropertyChangedCallback noteClickedCallBack;
+    @Inject
+    NotesRepository notesRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MyApplication.getComponent().inject(this);
         activityAllNotesBinding = DataBindingUtil.setContentView(this, R.layout.activity_all_notes);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -68,7 +74,7 @@ public class AllNotesActivity extends AppCompatActivity {
         } else {
             // There is no ViewModel yet, create it.
             AllNotesViewModel viewModel = new AllNotesViewModel(
-                    Injection.provideTasksRepository(getApplicationContext()),
+                    notesRepository,
                     getApplicationContext());
             // and bind it to this Activity's lifecycle using the Fragment Manager.
             ActivityUtils.addFragmentToActivity(
