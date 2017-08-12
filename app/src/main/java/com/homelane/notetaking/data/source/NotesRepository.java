@@ -19,13 +19,13 @@ public class NotesRepository implements NotesDataSource {
     /**
      * Returns the single instance of this class, creating it if necessary.
      *
-     * @param notesLocalDataSource  the device storage data source
+     * @param notesDataSource  the device storage data source
      * @return the {@link NotesRepository} instance
      */
     public static NotesRepository getInstance(
-            NotesDataSource notesLocalDataSource) {
+            NotesDataSource notesDataSource) {
         if (INSTANCE == null) {
-            INSTANCE = new NotesRepository(notesLocalDataSource);
+            INSTANCE = new NotesRepository(notesDataSource);
         }
         return INSTANCE;
     }

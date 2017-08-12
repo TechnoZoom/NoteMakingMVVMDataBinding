@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.homelane.notetaking.Injection;
+import com.homelane.notetaking.MyApplication;
 import com.homelane.notetaking.R;
 import com.homelane.notetaking.ViewModelHolder;
+import com.homelane.notetaking.data.source.NotesRepository;
 import com.homelane.notetaking.databinding.ActivityAddEditNoteBinding;
 import com.homelane.notetaking.util.ActivityUtils;
 import com.homelane.notetaking.util.SnackbarUtils;
+
+import javax.inject.Inject;
 
 public class AddEditNoteActivity extends AppCompatActivity {
 
@@ -22,10 +25,14 @@ public class AddEditNoteActivity extends AppCompatActivity {
     private Observable.OnPropertyChangedCallback snackbarCallback;
     private Observable.OnPropertyChangedCallback noteSavedCallback;
 
+    @Inject
+    NotesRepository notesRepository;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MyApplication.getComponent().inject(this);
         activityAddEditNoteBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_edit_note);
         viewModel = findOrCreateViewModel();
         activityAddEditNoteBinding.contAdEdNote.setViewmodel(viewModel);
@@ -62,7 +69,7 @@ public class AddEditNoteActivity extends AppCompatActivity {
             // There is no ViewModel yet, create it.
             AddEditNoteViewModel viewModel = new AddEditNoteViewModel(
                     getApplicationContext(),
-                    Injection.provideTasksRepository(getApplicationContext()));
+                    notesRepository);
 
             // and bind it to this Activity's lifecycle using the Fragment Manager.
             ActivityUtils.addFragmentToActivity(
