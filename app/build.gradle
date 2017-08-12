@@ -9,9 +9,9 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "com.homelane.notetaking.MyTestRunner"
     }
+    compileOptions.incremental = false
     buildTypes {
         release {
             minifyEnabled false
@@ -31,11 +31,20 @@ dependencies {
     })
 
     compile "com.google.dagger:dagger:2.9"
+    androidTestCompile "com.google.dagger:dagger:2.9"
     annotationProcessor "com.google.dagger:dagger-compiler:2.9"
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:2.9"
     provided 'javax.annotation:jsr250-api:1.0'
 
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
+
 }
+
+task changeInstrumentationTestRunner << {
+    android.defaultConfig.testInstrumentationRunner "com.homelane.notetaking.MyTestRunner"
+}
+
+

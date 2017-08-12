@@ -6,6 +6,8 @@ import com.homelane.notetaking.data.source.local.NotesLocalDataSource;
 import com.homelane.notetaking.data.source.mock.FakeDataSource;
 import com.homelane.notetaking.di.modules.NotesModule;
 
+import dagger.Module;
+
 /**
  * Created by kapilbakshi on 10/08/17.
  */
