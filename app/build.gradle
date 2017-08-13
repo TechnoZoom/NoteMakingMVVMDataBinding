@@ -29,22 +29,29 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-    compile "com.google.dagger:dagger:2.9"
-    androidTestCompile "com.google.dagger:dagger:2.9"
-    annotationProcessor "com.google.dagger:dagger-compiler:2.9"
-    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:2.9"
-    provided 'javax.annotation:jsr250-api:1.0'
-
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'com.squareup.retrofit2:retrofit:2.2.0'
+    compile 'com.squareup.retrofit2:converter-moshi:2.2.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.2.0'
+    compile 'io.reactivex:rxjava:1.1.8'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
-
+    compile "com.google.dagger:dagger:2.9"
+    androidTestCompile 'com.google.dagger:dagger:2.9'
+    androidTestAnnotationProcessor 'com.google.dagger:dagger-compiler:2.9'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
+    provided 'javax.annotation:jsr250-api:1.0'
 }
 
 task changeInstrumentationTestRunner << {
     android.defaultConfig.testInstrumentationRunner "com.homelane.notetaking.MyTestRunner"
 }
+
+
+
+
 
 

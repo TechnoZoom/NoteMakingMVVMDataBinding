@@ -32,6 +32,4 @@ public class NotesModule {
                 NotesLocalDataSource.getInstance(application));
     }
 
-
-
 }

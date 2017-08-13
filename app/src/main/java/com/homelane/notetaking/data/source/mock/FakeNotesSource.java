@@ -11,17 +11,17 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 
-public class FakeDataSource implements NotesDataSource {
+public class FakeNotesSource implements NotesDataSource {
 
-    private static FakeDataSource INSTANCE;
+    private static FakeNotesSource INSTANCE;
 
     private static final Map<String, Note> NOTES_SERVICE_DATA = new LinkedHashMap<>();
 
-    private FakeDataSource() {}
+    private FakeNotesSource() {}
 
-    public static FakeDataSource getInstance() {
+    public static FakeNotesSource getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new FakeDataSource();
+            INSTANCE = new FakeNotesSource();
         }
         return INSTANCE;
     }

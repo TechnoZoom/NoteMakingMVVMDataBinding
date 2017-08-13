@@ -11,4 +11,12 @@
     <string name="delete">Delete</string>
     <string name="all_notes">All Notes</string>
     <string name="add_note">Add a Note</string>
+    <string name="all_orders">All Orders</string>
+    <string name="title_activity_cancelled_order">Cancelled</string>
+    <string name="order_cancelled">Order Cancelled</string>
+    <string name="title_activity_delivery">Delivery</string>
+    <string name="order_out_for_delivery">Out For Delivery</string>
+    <string name="title_activity_order_received">Order Received</string>
+    <string name="order_received">Order Received</string>
+    <string name="some_error_ocurred">Some Error Ocurred</string>
 </resources>

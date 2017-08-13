@@ -3,10 +3,6 @@ package com.homelane.notetaking;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ListView;
-
-import com.homelane.notetaking.data.source.NotesRepository;
-import com.homelane.notetaking.data.source.mock.FakeDataSource;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;

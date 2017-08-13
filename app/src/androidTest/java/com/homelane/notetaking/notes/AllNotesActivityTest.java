@@ -11,7 +11,7 @@ import com.homelane.notetaking.R;
 import com.homelane.notetaking.TestMyApplication;
 import com.homelane.notetaking.data.Note;
 import com.homelane.notetaking.data.source.NotesRepository;
-import com.homelane.notetaking.data.source.mock.FakeDataSource;
+import com.homelane.notetaking.data.source.mock.FakeNotesSource;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -46,7 +46,7 @@ public class AllNotesActivityTest {
         TestMyApplication testMyApplication = (TestMyApplication) InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
         testMyApplication.getTestAppComponent().inject(this);
         Note note = new Note("Mock Waaala Note", "Mocking Successfull",1502363598964L);
-        FakeDataSource.getInstance().addNotes(note);
+        FakeNotesSource.getInstance().addNotes(note);
         mActivityTestRule.launchActivity(null);
     }
 
