@@ -4,6 +4,7 @@ import com.homelane.notetaking.di.AppComponent;
 import com.homelane.notetaking.di.DaggerAppComponent;
 import com.homelane.notetaking.di.DaggerTestComponent;
 import com.homelane.notetaking.di.NotesTestModule;
+import com.homelane.notetaking.di.OrdersTestModule;
 import com.homelane.notetaking.di.TestComponent;
 import com.homelane.notetaking.di.modules.NetworkModule;
 import com.homelane.notetaking.di.modules.NotesModule;
@@ -20,7 +21,7 @@ public class TestMyApplication extends  MyApplication {
         return DaggerAppComponent.builder()
                 .notesModule(new NotesTestModule(this))
                 .networkModule(new NetworkModule(this))
-                .ordersModule(new OrdersModule())
+                .ordersModule(new OrdersTestModule())
                 .build();
     }
 

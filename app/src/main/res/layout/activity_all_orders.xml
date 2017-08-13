@@ -33,15 +33,17 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/content_all_orders"
-            android:id="@+id/cont_all_orders"/>
-
         <ProgressBar
+            app:layout_constraintTop_toTopOf="@+id/cont_all_orders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="@{allOrdersViewModel.dataLoading ? View.GONE : View.VISIBLE}"
+            android:elevation="2dp"
+            android:visibility="@{allOrdersViewModel.dataLoading ? View.VISIBLE : View.GONE}"
             />
+
+        <include layout="@layout/content_all_orders"
+            android:id="@+id/cont_all_orders"/>
 
     </android.support.design.widget.CoordinatorLayout>
 
