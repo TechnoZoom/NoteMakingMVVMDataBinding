@@ -19,17 +19,16 @@ public class FakeOrderDataSource implements OrdersDataSource {
 
     private List<Order> ordersList;
 
-    public static OrdersRemoteDataSource INSTANCE;
+    public static FakeOrderDataSource INSTANCE;
 
     @Override
     public void getOrdersResponse(@NonNull LoadOrdersCallback callback) {
         callback.onGetOrdersResponse(Observable.<AllOrdersResponse>error(new NullPointerException("dwedw")));
-
     }
 
-    public static OrdersRemoteDataSource getInstance() {
+    public static FakeOrderDataSource getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new OrdersRemoteDataSource();
+            INSTANCE = new FakeOrderDataSource();
         }
         return INSTANCE;
     }
