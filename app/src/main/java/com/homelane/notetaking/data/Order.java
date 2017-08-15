@@ -27,4 +27,16 @@ public class Order {
     public Product getProduct() {
         return product;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 }

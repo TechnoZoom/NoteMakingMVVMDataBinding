@@ -89,8 +89,8 @@ public class AllOrdersViewModel {
 
                             @Override
                             public void onNext(AllOrdersResponse allOrdersResponse) {
+                                dataLoading.set(false);
                                 if (allOrdersResponse.isSuccess()) {
-                                    dataLoading.set(false);
                                     items.clear();
                                     items.addAll(allOrdersResponse.getOrders());
                                 }

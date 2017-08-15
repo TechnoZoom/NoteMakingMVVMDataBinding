@@ -33,4 +33,12 @@ public class AllOrdersResponse {
     public List<Order> getOrders() {
         return orders;
     }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public void setError_message(String error_message) {
+        this.error_message = error_message;
+    }
 }
