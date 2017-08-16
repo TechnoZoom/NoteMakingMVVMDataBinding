@@ -19,18 +19,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.*;
-import org.robolectric.shadows.ShadowIntent;
-import org.robolectric.shadows.ShadowToast;
 
 import static com.homelane.notetaking.support.Assert.assertNextActivity;
-import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.robolectric.Shadows.shadowOf;
 
 /**
  * Created by kapilbakshi on 16/08/17.
