@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
 import android.databinding.ObservableList;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,13 +33,23 @@ public class AllOrdersActivity extends AppCompatActivity {
     OrdersRepository ordersRepository;
 
     public static final String ORDERS_VIEWMODEL_TAG = "orders_view_model_tag";
+
+    public AllOrdersViewModel getAllOrdersViewModel() {
+        return allOrdersViewModel;
+    }
+
     private AllOrdersViewModel allOrdersViewModel;
+
+    public ActivityAllOrdersBinding getActivityAllOrdersBinding() {
+        return activityAllOrdersBinding;
+    }
+
     private ActivityAllOrdersBinding activityAllOrdersBinding;
     private Observable.OnPropertyChangedCallback snackbarCallback;
     private Observable.OnPropertyChangedCallback orderClickedStatusCallBack;
     
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         MyApplication.getComponent().inject(this);

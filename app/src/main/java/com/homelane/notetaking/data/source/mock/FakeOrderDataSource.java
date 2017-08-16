@@ -65,7 +65,7 @@ public class FakeOrderDataSource implements OrdersDataSource {
         Order receivedOrder = createOrderBasedOnStatus(OrderLifeCycleConstants.STATUS_ORDER_RECEIVED,12346);
         Order deliveryOrder = createOrderBasedOnStatus(OrderLifeCycleConstants.STATUS_ORDER_OUT_FOR_DELIVERY,127886);
         Order cancelledOrder = createOrderBasedOnStatus(OrderLifeCycleConstants.STATUS_ORDER_CANCELLED,9889899);
-        addOrders(receivedOrder,cancelledOrder,deliveryOrder);
+        addOrders(deliveryOrder,cancelledOrder,receivedOrder);
         ALL_ORDER_RESPONSE_OBSERVABLE = Observable.just(getAllOrderResponse());
     }
 
