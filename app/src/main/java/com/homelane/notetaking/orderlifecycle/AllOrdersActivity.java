@@ -89,7 +89,7 @@ public class AllOrdersActivity extends AppCompatActivity {
             // There is no ViewModel yet, create it.
             AllOrdersViewModel viewModel = new AllOrdersViewModel(
                     ordersRepository,
-                    getApplicationContext());
+                    getApplicationContext().getString(R.string.some_error_ocurred));
             // and bind it to this Activity's lifecycle using the Fragment Manager.
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(),

@@ -80,7 +80,6 @@ public class AllOrdersActivityTest {
         }
     }
 
-
     @Test
     public void onDeliveryOrderClick_checkIfDeliveryOrderPageIsOpened() {
         FakeOrderDataSource.getInstance().createOrder_Delivery_Cancelled_And_Received_Observable();

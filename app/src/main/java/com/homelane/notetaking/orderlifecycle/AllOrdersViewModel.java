@@ -34,12 +34,12 @@ public class AllOrdersViewModel {
 
     private final OrdersRepository ordersRepository;
 
-    private Context mContext;
+    private String exceptionErrorText;
 
     public AllOrdersViewModel(
             OrdersRepository repository,
-            Context context) {
-        mContext = context.getApplicationContext();
+            String exceptionErrorText) {
+        this.exceptionErrorText = exceptionErrorText;
         ordersRepository = repository;
     }
 
@@ -83,7 +83,7 @@ public class AllOrdersViewModel {
                             @Override
                             public void onError(Throwable e) {
                                 dataLoading.set(false);
-                                snackbarText.set(mContext.getString(R.string.some_error_ocurred));
+                                snackbarText.set(exceptionErrorText);
                                 e.printStackTrace();
                             }
 
