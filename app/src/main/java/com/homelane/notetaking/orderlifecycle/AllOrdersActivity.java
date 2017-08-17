@@ -137,7 +137,7 @@ public class AllOrdersActivity extends AppCompatActivity {
 
     private void setOrdersListCallBack() {
 
-        allOrdersViewModel.items.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<Order>>() {
+        allOrdersViewModel.ordersList.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<Order>>() {
             @Override
             public void onChanged(ObservableList<Order> orders) {
                 setNotesRecyclerView(orders.subList(0,orders.size()));

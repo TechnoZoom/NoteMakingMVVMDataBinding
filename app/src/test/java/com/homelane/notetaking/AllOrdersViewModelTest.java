@@ -18,6 +18,7 @@ import rx.schedulers.Schedulers;
 import static com.homelane.notetaking.Constants.EXCEPTION_ERROR_SNACKBAR_TEXT;
 import static com.homelane.notetaking.Constants.SERVER_BUSY_MESSAGE;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 
 
 /**
@@ -58,6 +59,37 @@ public class AllOrdersViewModelTest {
         AllOrdersViewModel allOrdersViewModel = constructAndGetAllOrdersViewModel(EXCEPTION_ERROR_SNACKBAR_TEXT);
         allOrdersViewModel.loadOrders();
         assertEquals(SERVER_BUSY_MESSAGE, allOrdersViewModel.getSnackbarText());
+    }
+
+    @Test
+    public void onOrdersFetched_CheckIfOrdreCountIsCorrect(){
+        FakeOrderDataSource.getInstance().createOrder_Delivery_Cancelled_And_Received_Observable();
+        AllOrdersViewModel allOrdersViewModel = constructAndGetAllOrdersViewModel(EXCEPTION_ERROR_SNACKBAR_TEXT);
+        allOrdersViewModel.loadOrders();
+        assertEquals(3, allOrdersViewModel.getOrdersList().size());
+    }
+
+    @Test
+    public void beforeOrdersLoading_CheckIfProgressBarIsNotDisplayed(){
+        FakeOrderDataSource.getInstance().createOrder_Delivery_Cancelled_And_Received_Observable();
+        AllOrdersViewModel allOrdersViewModel = constructAndGetAllOrdersViewModel(EXCEPTION_ERROR_SNACKBAR_TEXT);
+        assertFalse(allOrdersViewModel.getDataLoading().get());
+    }
+
+    @Test
+    public void afterSuccessFullOrdersLoading_CheckIfProgressBarIsNotDisplayed(){
+        FakeOrderDataSource.getInstance().createOrder_Delivery_Cancelled_And_Received_Observable();
+        AllOrdersViewModel allOrdersViewModel = constructAndGetAllOrdersViewModel(EXCEPTION_ERROR_SNACKBAR_TEXT);
+        allOrdersViewModel.loadOrders();
+        assertFalse(allOrdersViewModel.getDataLoading().get());
+    }
+
+    @Test
+    public void afterExceptionOrdersLoading_CheckIfProgressBarIsNotDisplayed(){
+        FakeOrderDataSource.getInstance().create_Exception_Error_Observable("Internet Security Exception");
+        AllOrdersViewModel allOrdersViewModel = constructAndGetAllOrdersViewModel(EXCEPTION_ERROR_SNACKBAR_TEXT);
+        allOrdersViewModel.loadOrders();
+        assertFalse(allOrdersViewModel.getDataLoading().get());
     }
 
     private AllOrdersViewModel constructAndGetAllOrdersViewModel(String errorText) {

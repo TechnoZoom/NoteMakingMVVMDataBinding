@@ -24,7 +24,7 @@ import rx.schedulers.Schedulers;
 public class AllOrdersViewModel {
 
     // These observable fields will update Views automatically
-    public final ObservableList<Order> items = new ObservableArrayList<>();
+    public final ObservableList<Order> ordersList = new ObservableArrayList<>();
 
     public final ObservableBoolean dataLoading = new ObservableBoolean(false);
 
@@ -60,6 +60,14 @@ public class AllOrdersViewModel {
         return snackbarText.get();
     }
 
+    public ObservableList<Order> getOrdersList() {
+        return ordersList;
+    }
+
+    public ObservableBoolean getDataLoading() {
+        return dataLoading;
+    }
+
     /**
      * @param showLoadingUI Pass in true to display a loading icon in the UI
      */
@@ -91,8 +99,8 @@ public class AllOrdersViewModel {
                             public void onNext(AllOrdersResponse allOrdersResponse) {
                                 dataLoading.set(false);
                                 if (allOrdersResponse.isSuccess()) {
-                                    items.clear();
-                                    items.addAll(allOrdersResponse.getOrders());
+                                    ordersList.clear();
+                                    ordersList.addAll(allOrdersResponse.getOrders());
                                 }
                                 else {
                                     snackbarText.set(allOrdersResponse.getError_message());
