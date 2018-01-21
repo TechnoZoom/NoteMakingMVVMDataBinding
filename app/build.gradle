@@ -4,12 +4,12 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.homelane.notetaking"
+        applicationId "com.kapil.ecomm"
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "com.homelane.notetaking.MyTestRunner"
+        testInstrumentationRunner "com.kapil.ecomm.MyTestRunner"
     }
     compileOptions.incremental = false
     buildTypes {
@@ -54,9 +54,6 @@ dependencies {
 
 repositories { jcenter() }
 
-task changeInstrumentationTestRunner << {
-    android.defaultConfig.testInstrumentationRunner "com.homelane.notetaking.MyTestRunner"
-}
 
 
 

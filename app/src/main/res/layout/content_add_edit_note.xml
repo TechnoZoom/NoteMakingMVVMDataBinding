@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.homelane.notetaking.addnote.AddEditNoteViewModel" />
+            type="com.kapil.ecomm.addnote.AddEditNoteViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
