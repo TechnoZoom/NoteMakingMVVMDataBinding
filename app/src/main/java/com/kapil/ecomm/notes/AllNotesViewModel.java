@@ -1,22 +1,22 @@
 
 package com.kapil.ecomm.notes;
 
-import android.content.Context;
-import android.databinding.BaseObservable;
-import android.databinding.ObservableArrayList;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
-import android.databinding.ObservableList;
-import com.kapil.ecomm.R;
-import com.kapil.ecomm.data.Note;
-import com.kapil.ecomm.data.source.NotesDataSource;
+
 import com.kapil.ecomm.data.source.NotesRepository;
+import com.kapil.ecomm.data.source.local.entities.Note;
+
 import java.util.List;
 
-public class AllNotesViewModel extends BaseObservable {
+public class AllNotesViewModel extends ViewModel {
 
     // These observable fields will update Views automatically
-    public final ObservableList<Note> items = new ObservableArrayList<>();
+    private LiveData<List<Note>> notesLiveData ;
+
 
     public final ObservableBoolean dataLoading = new ObservableBoolean(false);
 
@@ -26,12 +26,8 @@ public class AllNotesViewModel extends BaseObservable {
 
     private final NotesRepository notesRepository;
 
-    private Context mContext;
-
     public AllNotesViewModel(
-            NotesRepository repository,
-            Context context) {
-        mContext = context.getApplicationContext();
+            NotesRepository repository) {
         notesRepository = repository;
     }
 
@@ -44,8 +40,8 @@ public class AllNotesViewModel extends BaseObservable {
         loadNotes(true);
     }
 
-    public void deleteNote(String noteId) {
-        notesRepository.deleteNote(noteId);
+    public void deleteNote(Note note) {
+        notesRepository.deleteNote(note);
     }
 
     public void noteClicked(String noteId) {
@@ -56,6 +52,10 @@ public class AllNotesViewModel extends BaseObservable {
         return snackbarText.get();
     }
 
+    public LiveData<List<Note>> getNotesLiveData() {
+        return notesLiveData;
+    }
+
     /**
      * @param showLoadingUI Pass in true to display a loading icon in the UI
      */
@@ -63,20 +63,21 @@ public class AllNotesViewModel extends BaseObservable {
         if (showLoadingUI) {
             dataLoading.set(true);
         }
-        notesRepository.getNotes(new NotesDataSource.LoadNotesCallback() {
+       notesLiveData = notesRepository.getNotes();
+    }
 
-            @Override
-            public void onNotesLoaded(List<Note> notes) {
-                dataLoading.set(false);
-                items.clear();
-                items.addAll(notes);
-            }
+    public static class Factory extends ViewModelProvider.NewInstanceFactory {
 
-            @Override
-            public void onDataNotAvailable() {
-                dataLoading.set(false);
-                snackbarText.set(mContext.getString(R.string.no_notes_available));
-            }
-        });
+        private final NotesRepository notesRepository;
+
+        public Factory(NotesRepository notesRepository) {
+            this.notesRepository = notesRepository;
+        }
+
+        @Override
+        public <T extends ViewModel> T create(Class<T> modelClass) {
+            //noinspection unchecked
+            return (T) new AllNotesViewModel(notesRepository);
+        }
     }
 }

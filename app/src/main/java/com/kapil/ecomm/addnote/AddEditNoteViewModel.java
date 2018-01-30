@@ -1,15 +1,21 @@
 package com.kapil.ecomm.addnote;
+
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.kapil.ecomm.R;
-import com.kapil.ecomm.data.Note;
-import com.kapil.ecomm.data.source.NotesDataSource;
 import com.kapil.ecomm.data.source.NotesRepository;
+import com.kapil.ecomm.data.source.local.entities.Note;
 import com.kapil.ecomm.util.DateTimeUtils;
 
-public class AddEditNoteViewModel implements NotesDataSource.GetNotesCallback {
+public class AddEditNoteViewModel extends AndroidViewModel {
 
     public ObservableField<String> title = new ObservableField<>();
 
@@ -33,8 +39,9 @@ public class AddEditNoteViewModel implements NotesDataSource.GetNotesCallback {
     private boolean mIsDataLoaded = false;
 
 
-    AddEditNoteViewModel(Context context, NotesRepository notesRepository) {
-        mContext = context.getApplicationContext(); // Force use of Application Context.
+    public AddEditNoteViewModel(@NonNull Application application, NotesRepository notesRepository) {
+        super(application);
+        mContext = application.getApplicationContext();
         this.notesRepository = notesRepository;
     }
 
@@ -53,20 +60,7 @@ public class AddEditNoteViewModel implements NotesDataSource.GetNotesCallback {
         }
         mIsNewNote = false;
         dataLoading.set(true);
-        notesRepository.getNote(taskId, this);
-    }
-
-    @Override
-    public void onNoteLoaded(Note note) {
-        title.set(note.getTitle());
-        description.set(note.getDescription());
-        dataLoading.set(false);
-        mIsDataLoaded = true;
-    }
-
-    @Override
-    public void onDataNotAvailable() {
-        dataLoading.set(false);
+        notesRepository.getNote(taskId);
     }
 
     public void saveNote() {
@@ -100,7 +94,8 @@ public class AddEditNoteViewModel implements NotesDataSource.GetNotesCallback {
         if (isNewNote()) {
             throw new RuntimeException("updateNote() was called but note is new.");
         }
-        notesRepository.updateNote(new Note(note.getTitle(), note.getDescription(), DateTimeUtils.getCurrentEpoch(),mNoteId));
+        notesRepository.updateNote(new Note(note.getTitle(), note.getDescription(),
+                DateTimeUtils.getCurrentEpoch(),mNoteId));
         navigateOnNoteSaved();
     }
 
@@ -110,5 +105,24 @@ public class AddEditNoteViewModel implements NotesDataSource.GetNotesCallback {
 
     public void setSnackBarText(String textValue) {
         snackbarText.set(textValue);
+    }
+
+
+    public static class Factory extends ViewModelProvider.NewInstanceFactory {
+
+        @NonNull
+        private Application application;
+        private final NotesRepository notesRepository;
+
+        public Factory(Application application, NotesRepository notesRepository) {
+           this.notesRepository = notesRepository;
+           this.application = application;
+        }
+
+        @Override
+        public <T extends ViewModel> T create(Class<T> modelClass) {
+            //noinspection unchecked
+            return (T) new AddEditNoteViewModel(application, notesRepository);
+        }
     }
 }

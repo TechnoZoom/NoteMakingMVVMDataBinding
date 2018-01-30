@@ -1,8 +1,9 @@
 package com.kapil.ecomm.data.source;
 
+import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
-import com.kapil.ecomm.data.Note;
+import com.kapil.ecomm.data.source.local.entities.Note;
 
 import java.util.List;
 
@@ -38,26 +39,9 @@ public class NotesRepository implements NotesDataSource {
         INSTANCE = null;
     }
 
-    /**
-     * Gets tasks from cache, local data source (SQLite) or remote data source, whichever is
-     * available first.
-     * <p>
-     * Note: {@link LoadNotesCallback#onDataNotAvailable()} is fired if all data sources fail to
-     * get the data.
-     */
     @Override
-    public void getNotes(@NonNull final LoadNotesCallback callback) {
-        mTasksLocalDataSource.getNotes(new LoadNotesCallback() {
-            @Override
-            public void onNotesLoaded(List<Note> tasks) {
-                callback.onNotesLoaded(tasks);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                callback.onDataNotAvailable();
-            }
-        });
+    public LiveData<List<Note>> getNotes() {
+      return mTasksLocalDataSource.getNotes();
     }
 
     @Override
@@ -71,18 +55,8 @@ public class NotesRepository implements NotesDataSource {
     }
 
     @Override
-    public void getNote(@NonNull final String noteId, @NonNull final GetNotesCallback callback) {
-        mTasksLocalDataSource.getNote(noteId, new GetNotesCallback() {
-            @Override
-            public void onNoteLoaded(Note note) {
-                callback.onNoteLoaded(note);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                callback.onDataNotAvailable();
-            }
-        });
+    public LiveData<Note> getNote(@NonNull final String noteID) {
+        return mTasksLocalDataSource.getNote(noteID);
     }
 
     @Override
@@ -91,8 +65,8 @@ public class NotesRepository implements NotesDataSource {
     }
 
     @Override
-    public void deleteNote(@NonNull String noteId) {
-        mTasksLocalDataSource.deleteNote(noteId);
+    public void deleteNote(@NonNull Note note) {
+        mTasksLocalDataSource.deleteNote(note);
     }
 
 }

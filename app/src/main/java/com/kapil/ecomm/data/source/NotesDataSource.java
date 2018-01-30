@@ -1,32 +1,32 @@
 package com.kapil.ecomm.data.source;
 
+import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
-
-import com.kapil.ecomm.data.Note;
+import com.kapil.ecomm.data.source.local.entities.Note;
 
 import java.util.List;
 
 
 public interface NotesDataSource {
 
-    interface LoadNotesCallback {
+    /*interface LoadNotesCallback {
 
-        void onNotesLoaded(List<Note> tasks);
+        void onNotesLoaded(LiveData<List<Note>> tasks);
 
         void onDataNotAvailable();
     }
 
     interface GetNotesCallback {
 
-        void onNoteLoaded(Note task);
+        void onNoteLoaded(LiveData<Note> noteLiveData);
 
         void onDataNotAvailable();
-    }
+    }*/
 
-    void getNotes(@NonNull LoadNotesCallback callback);
+    LiveData<List<Note>> getNotes();
 
-    void getNote(@NonNull String noteId, @NonNull GetNotesCallback callback);
+    LiveData<Note> getNote(@NonNull String noteId);
 
     void saveNote(@NonNull Note note);
 
@@ -34,5 +34,5 @@ public interface NotesDataSource {
 
     void deleteAllNotes();
 
-    void deleteNote(@NonNull String noteId);
+    void deleteNote(@NonNull Note note);
 }

@@ -8,8 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.kapil.ecomm.R;
-import com.kapil.ecomm.data.Note;
+import com.kapil.ecomm.data.source.local.entities.Note;
 import com.kapil.ecomm.util.DateTimeUtils;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class AllNotesAdapter extends RecyclerView.Adapter<AllNotesAdapter.NotesV
         holder.getDeleteButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewModel.deleteNote(note.getId());
+                viewModel.deleteNote(note);
                 notesList.remove(position);
                 notifyDataSetChanged();
             }

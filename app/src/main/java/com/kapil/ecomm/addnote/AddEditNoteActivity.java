@@ -1,5 +1,6 @@
 package com.kapil.ecomm.addnote;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
 import android.os.Bundle;
@@ -8,10 +9,8 @@ import android.view.View;
 
 import com.kapil.ecomm.MyApplication;
 import com.kapil.ecomm.R;
-import com.kapil.ecomm.ViewModelHolder;
 import com.kapil.ecomm.data.source.NotesRepository;
 import com.kapil.ecomm.databinding.ActivityAddEditNoteBinding;
-import com.kapil.ecomm.util.ActivityUtils;
 import com.kapil.ecomm.util.SnackbarUtils;
 
 import javax.inject.Inject;
@@ -34,7 +33,8 @@ public class AddEditNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         MyApplication.getComponent().inject(this);
         activityAddEditNoteBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_edit_note);
-        viewModel = findOrCreateViewModel();
+        AddEditNoteViewModel.Factory addEditViewModelFactory = new AddEditNoteViewModel.Factory(getApplication(),notesRepository);
+        viewModel = ViewModelProviders.of(this, addEditViewModelFactory).get(AddEditNoteViewModel.class);
         activityAddEditNoteBinding.contAdEdNote.setViewmodel(viewModel);
         setupSnackBar();
         setNoteSavedCallback();
@@ -54,30 +54,6 @@ public class AddEditNoteActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
             viewModel.loadNote(getIntent().getStringExtra(ARGUMENT_EDIT_NOTE_ID));
-    }
-    private AddEditNoteViewModel findOrCreateViewModel() {
-        // In a configuration change we might have a ViewModel present. It's retained using the
-        // Fragment Manager.
-        ViewModelHolder<AddEditNoteViewModel> retainedViewModel =
-                (ViewModelHolder<AddEditNoteViewModel>) getSupportFragmentManager()
-                        .findFragmentByTag(ADD_EDIT_VIEWMODEL_TAG);
-
-        if (retainedViewModel != null && retainedViewModel.getViewmodel() != null) {
-            // If the model was retained, return it.
-            return retainedViewModel.getViewmodel();
-        } else {
-            // There is no ViewModel yet, create it.
-            AddEditNoteViewModel viewModel = new AddEditNoteViewModel(
-                    getApplicationContext(),
-                    notesRepository);
-
-            // and bind it to this Activity's lifecycle using the Fragment Manager.
-            ActivityUtils.addFragmentToActivity(
-                    getSupportFragmentManager(),
-                    ViewModelHolder.createContainer(viewModel),
-                    ADD_EDIT_VIEWMODEL_TAG);
-            return viewModel;
-        }
     }
 
     private void setupSnackBar() {
