@@ -5,14 +5,30 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.kapil.ecomm.addnote.AddEditNoteActivity">
 
+    <data>
+
+        <import type="android.view.View" />
+        <variable
+            name="viewmodel2"
+            type="com.kapil.ecomm.addnote.AddEditNoteViewModel" />
+    </data>
+
     <android.support.design.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/coord"
-        >
-        <include layout="@layout/content_add_edit_note"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
             android:id="@+id/cont_ad_ed_note"
-            />
+            layout="@layout/content_add_edit_note" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{viewmodel2.dataLoading ? View.VISIBLE : View.GONE}" />
+
+
     </android.support.design.widget.CoordinatorLayout>
 
 </layout>

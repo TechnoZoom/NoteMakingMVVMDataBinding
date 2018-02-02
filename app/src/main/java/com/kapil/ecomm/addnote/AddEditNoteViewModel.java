@@ -2,10 +2,12 @@ package com.kapil.ecomm.addnote;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
-import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,15 +19,15 @@ import com.kapil.ecomm.util.DateTimeUtils;
 
 public class AddEditNoteViewModel extends AndroidViewModel {
 
-    public ObservableField<String> title = new ObservableField<>();
+    public final ObservableField<String> title = new ObservableField<String>();
 
-    public ObservableField<String> description = new ObservableField<>();
+    public final ObservableField<String> description = new ObservableField<String>();
 
-    public ObservableBoolean dataLoading = new ObservableBoolean(false);
+    public final ObservableField<Boolean> dataLoading = new ObservableField<Boolean>();
+    
+    public MutableLiveData<String> snackbarTextLiveData = new MutableLiveData<>();
 
-    public ObservableField<String> snackbarText = new ObservableField<>();
-
-    public ObservableField<Boolean> noteSavedObservable = new ObservableField<>();
+    public MutableLiveData<Boolean> noteSavedLiveData = new MutableLiveData<>();
 
     private final NotesRepository notesRepository;
 
@@ -38,14 +40,21 @@ public class AddEditNoteViewModel extends AndroidViewModel {
 
     private boolean mIsDataLoaded = false;
 
+    public LiveData<Note> getNoteLiveData() {
+        return noteLiveData;
+    }
+
+    private LiveData<Note> noteLiveData;
+
 
     public AddEditNoteViewModel(@NonNull Application application, NotesRepository notesRepository) {
         super(application);
+        dataLoading.set(false);
+        snackbarTextLiveData.setValue(null);
         mContext = application.getApplicationContext();
         this.notesRepository = notesRepository;
     }
-
-
+    
     public void loadNote(String taskId) {
         if (dataLoading.get()) {
             return;
@@ -58,15 +67,24 @@ public class AddEditNoteViewModel extends AndroidViewModel {
         if (mIsDataLoaded) {
             return;
         }
-        mIsNewNote = false;
+
         dataLoading.set(true);
-        notesRepository.getNote(taskId);
+        noteLiveData = Transformations.switchMap(notesRepository.getNote(taskId),note -> {
+            if(note != null) {
+                description.set(note.getNoteDesc());
+                title.set(note.getNoteTitle());
+                dataLoading.set(false);
+            }
+            return notesRepository.getNote(taskId);
+        });
+        mIsNewNote = false;
+        //dataLoading.set(true);
     }
 
     public void saveNote() {
         Note note = new Note(title.get(), description.get(), DateTimeUtils.getCurrentEpoch());
         if (note.isEmpty()) {
-            snackbarText.set(mContext.getString(R.string.empty_note_message));
+            snackbarTextLiveData.setValue(mContext.getString(R.string.empty_note_message));
             return;
         }
         if (isNewNote()) {
@@ -76,10 +94,6 @@ public class AddEditNoteViewModel extends AndroidViewModel {
         }
     }
 
-    @Nullable
-    public String getSnackbarText() {
-        return snackbarText.get();
-    }
 
     private boolean isNewNote() {
         return mIsNewNote;
@@ -100,14 +114,9 @@ public class AddEditNoteViewModel extends AndroidViewModel {
     }
 
     private void navigateOnNoteSaved() {
-        noteSavedObservable.set(true);
+        noteSavedLiveData.setValue(true);
     }
-
-    public void setSnackBarText(String textValue) {
-        snackbarText.set(textValue);
-    }
-
-
+    
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
 
         @NonNull
@@ -124,5 +133,13 @@ public class AddEditNoteViewModel extends AndroidViewModel {
             //noinspection unchecked
             return (T) new AddEditNoteViewModel(application, notesRepository);
         }
+    }
+
+    public MutableLiveData<String> getSnackbarTextLiveData() {
+        return snackbarTextLiveData;
+    }
+
+    public MutableLiveData<Boolean> getNoteSavedLiveData() {
+        return noteSavedLiveData;
     }
 }

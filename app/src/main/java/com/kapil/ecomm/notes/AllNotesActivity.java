@@ -53,7 +53,7 @@ public class AllNotesActivity extends AppCompatActivity {
         });
         setupSnackBar();
         setNoteClickedCallback();
-        setNotesListCallBack();
+        //setNotesListCallBack();
     }
 
     private void setViewModel() {
@@ -78,6 +78,7 @@ public class AllNotesActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         allNotesViewModel.loadNotes();
+        setNotesListCallBack();
     }
 
     private void setupSnackBar() {
@@ -109,7 +110,6 @@ public class AllNotesActivity extends AppCompatActivity {
                     return;
                 }
                 setNotesRecyclerView(notes.subList(0,notes.size()));
-                allNotesViewModel.dataLoading.set(false);
             }
         });
     }

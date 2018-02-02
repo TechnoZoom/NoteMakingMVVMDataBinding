@@ -2,6 +2,8 @@
 package com.kapil.ecomm.notes;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.databinding.ObservableBoolean;
@@ -15,10 +17,9 @@ import java.util.List;
 public class AllNotesViewModel extends ViewModel {
 
     // These observable fields will update Views automatically
-    private LiveData<List<Note>> notesLiveData ;
+    private LiveData<List<Note>> notesLiveData;
 
-
-    public final ObservableBoolean dataLoading = new ObservableBoolean(false);
+    public final ObservableBoolean dataLoading = new ObservableBoolean();
 
     final ObservableField<String> snackbarText = new ObservableField<>();
 
@@ -26,8 +27,8 @@ public class AllNotesViewModel extends ViewModel {
 
     private final NotesRepository notesRepository;
 
-    public AllNotesViewModel(
-            NotesRepository repository) {
+    public AllNotesViewModel(NotesRepository repository) {
+        notesLiveData = new MutableLiveData<List<Note>>();
         notesRepository = repository;
     }
 
@@ -63,7 +64,14 @@ public class AllNotesViewModel extends ViewModel {
         if (showLoadingUI) {
             dataLoading.set(true);
         }
-       notesLiveData = notesRepository.getNotes();
+
+        notesLiveData = Transformations.switchMap(notesRepository.getNotes(), notes -> {
+            if (notes != null) {
+                dataLoading.set(false);
+            }
+
+            return notesRepository.getNotes();
+        });
     }
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
