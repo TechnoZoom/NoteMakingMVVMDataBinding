@@ -23,7 +23,7 @@ public interface NotesDao {
     void insert(Note notesEntity);
 
     @Delete
-    void deleteAllNote(Note note);
+    void deleteNote(Note note);
 
     @Query("DELETE FROM " + NotesPersistenceContract.TaskEntry.TABLE_NAME)
     public void deleteAllNotes();

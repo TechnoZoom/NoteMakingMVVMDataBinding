@@ -9,8 +9,8 @@ import android.test.suitebuilder.annotation.LargeTest;
 
 import com.kapil.ecomm.R;
 import com.kapil.ecomm.TestMyApplication;
-import com.kapil.ecomm.data.Note;
 import com.kapil.ecomm.data.source.NotesRepository;
+import com.kapil.ecomm.data.source.local.entities.Note;
 import com.kapil.ecomm.data.source.mock.FakeNotesSource;
 
 import org.junit.Before;

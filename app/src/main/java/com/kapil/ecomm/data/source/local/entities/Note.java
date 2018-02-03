@@ -84,4 +84,8 @@ public class Note {
     public String toString() {
         return "Note with title " + noteTitle;
     }
+
+    public void setNoteTitle(String noteTitle) {
+        this.noteTitle = noteTitle;
+    }
 }

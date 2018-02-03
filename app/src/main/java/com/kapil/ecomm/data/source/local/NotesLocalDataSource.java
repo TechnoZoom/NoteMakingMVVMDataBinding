@@ -90,7 +90,7 @@ public class NotesLocalDataSource implements NotesDataSource {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                notesDao.deleteAllNote(note);
+                notesDao.deleteNote(note);
             }
         });
     }
