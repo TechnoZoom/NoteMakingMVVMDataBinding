@@ -19,22 +19,28 @@ import java.util.List;
 @Dao
 public interface NotesDao {
 
+    //Inserts a particular note in the table
     @Insert
     void insert(Note notesEntity);
 
+    //Deletes a particular note
     @Delete
     void deleteNote(Note note);
 
+    //Deletes all the notes From the table
     @Query("DELETE FROM " + NotesPersistenceContract.TaskEntry.TABLE_NAME)
     public void deleteAllNotes();
 
+    //Updates a particular Note
     @Update
     int update(Note notesEntity);
 
+    //Fetches a particular note from the table
     @Query("SELECT * FROM " + NotesPersistenceContract.TaskEntry.TABLE_NAME +" WHERE " +
             NotesPersistenceContract.TaskEntry.COLUMN_NAME_ENTRY_ID + " = :id")
     LiveData<Note> getNoteById(String id);
 
+    //Fetches the list of notes from the table
     @Query("SELECT * FROM " + NotesPersistenceContract.TaskEntry.TABLE_NAME)
     LiveData<List<Note>> getAllNotes();
 }

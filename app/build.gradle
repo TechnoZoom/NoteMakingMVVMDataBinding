@@ -55,7 +55,7 @@ dependencies {
     testCompile 'org.khronos:opengl-api:gl1.1-android-2.1_r1'
     androidTestAnnotationProcessor 'com.google.dagger:dagger-compiler:2.9'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
-    testImplementation "android.arch.persistence.room:testing:1.0.0"
+    //testImplementation "android.arch.persistence.room:testing:1.0.0"
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:1.1.0"
     // alternatively, just ViewModel
@@ -63,14 +63,7 @@ dependencies {
     // alternatively, just LiveData
     implementation "android.arch.lifecycle:livedata:1.1.0"
     androidTestImplementation "android.arch.core:core-testing:1.1.0"
-    androidTestImplementation "android.arch.persistence.room:testing:1.0.0"
-
-    testImplementation "android.arch.core:core-testing:1.1.0"
-
-    // Test helpers for Room
-    testImplementation "android.arch.persistence.room:testing:1.0.0"
-
-
+    //androidTestImplementation "android.arch.persistence.room:testing:1.0.0"
     annotationProcessor "android.arch.lifecycle:compiler:1.1.0"
 
     provided 'javax.annotation:jsr250-api:1.0'

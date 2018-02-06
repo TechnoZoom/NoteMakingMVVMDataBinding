@@ -27,7 +27,6 @@ public class NotesLocalDataSource implements NotesDataSource {
     private AppExecutors appExecutors;
 
 
-    // Prevent direct instantiation.
     private NotesLocalDataSource(@NonNull Context context, NotesDao notesDao) {
         mDbHelper = new NotesDbHelper(context);
         this.notesDao = notesDao;
