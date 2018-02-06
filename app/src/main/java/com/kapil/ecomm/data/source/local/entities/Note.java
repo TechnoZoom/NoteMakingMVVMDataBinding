@@ -23,39 +23,27 @@ public class Note {
     @ColumnInfo(name = NotesPersistenceContract.TaskEntry.COLUMN_NAME_TITLE)
     private String noteTitle;
 
-    public String getNotesId() {
-        return notesId;
-    }
-
-    public String getNoteTitle() {
-        return noteTitle;
-    }
-
-    public String getNoteDesc() {
-        return noteDesc;
-    }
-
-    public long getNoteDateTime() {
-        return noteDateTime;
-    }
-
     @ColumnInfo(name = NotesPersistenceContract.TaskEntry.COLUMN_NAME_DESCRIPTION)
     private String noteDesc;
+
+    @ColumnInfo(name = NotesPersistenceContract.TaskEntry.COLUMN_NAME_SUBTITLE)
+    private String subTitle;
 
     @ColumnInfo(name = NotesPersistenceContract.TaskEntry.COLUMN_DATE_TIME)
     private long noteDateTime;
 
 
     @Ignore
-    public Note(String noteTitle, String noteDesc, long noteDateTime) {
-        this(noteTitle,noteDesc,noteDateTime, UUID.randomUUID().toString());
+    public Note(String noteTitle, String subTitle,  String noteDesc, long noteDateTime) {
+        this(noteTitle,subTitle,noteDesc,noteDateTime, UUID.randomUUID().toString());
     }
 
-    public Note(String noteTitle, String noteDesc, long noteDateTime,String notesId) {
+    public Note(String noteTitle, String subTitle, String noteDesc, long noteDateTime,String notesId) {
         this.notesId = notesId;
         this.noteTitle = noteTitle;
         this.noteDesc = noteDesc;
         this.noteDateTime = noteDateTime;
+        this.subTitle = subTitle;
     }
 
     public String getId() {
@@ -80,9 +68,29 @@ public class Note {
                 (noteDesc == null || noteDesc.isEmpty());
     }
 
+    public String getNotesId() {
+        return notesId;
+    }
+
+    public String getNoteTitle() {
+        return noteTitle;
+    }
+
+    public String getNoteDesc() {
+        return noteDesc;
+    }
+
+    public long getNoteDateTime() {
+        return noteDateTime;
+    }
+
     @Override
     public String toString() {
         return "Note with title " + noteTitle;
+    }
+
+    public String getSubTitle() {
+        return subTitle;
     }
 
     public void setNoteTitle(String noteTitle) {

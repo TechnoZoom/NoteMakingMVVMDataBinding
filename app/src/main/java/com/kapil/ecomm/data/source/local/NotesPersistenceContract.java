@@ -14,6 +14,7 @@ public final class NotesPersistenceContract {
         public static final String COLUMN_NAME_ENTRY_ID = "entryid";
         public static final String COLUMN_NAME_TITLE = "title";
         public static final String COLUMN_NAME_DESCRIPTION = "description";
+        public static final String COLUMN_NAME_SUBTITLE = "sub_title";
         public static final String COLUMN_DATE_TIME = "datetime";
     }
 }

@@ -23,6 +23,8 @@ public class AddEditNoteViewModel extends AndroidViewModel {
 
     public final ObservableField<String> description = new ObservableField<String>();
 
+    public final ObservableField<String> subTitle = new ObservableField<String>();
+
     public final ObservableField<Boolean> dataLoading = new ObservableField<Boolean>();
     
     public MutableLiveData<String> snackbarTextLiveData = new MutableLiveData<>();
@@ -73,16 +75,16 @@ public class AddEditNoteViewModel extends AndroidViewModel {
             if(note != null) {
                 description.set(note.getNoteDesc());
                 title.set(note.getNoteTitle());
+                subTitle.set(note.getSubTitle());
                 dataLoading.set(false);
             }
             return notesRepository.getNote(taskId);
         });
         mIsNewNote = false;
-        //dataLoading.set(true);
     }
 
     public void saveNote() {
-        Note note = new Note(title.get(), description.get(), DateTimeUtils.getCurrentEpoch());
+        Note note = new Note(title.get(),subTitle.get(), description.get(), DateTimeUtils.getCurrentEpoch());
         if (note.isEmpty()) {
             snackbarTextLiveData.setValue(mContext.getString(R.string.empty_note_message));
             return;
@@ -108,7 +110,7 @@ public class AddEditNoteViewModel extends AndroidViewModel {
         if (isNewNote()) {
             throw new RuntimeException("updateNote() was called but note is new.");
         }
-        notesRepository.updateNote(new Note(note.getTitle(), note.getDescription(),
+        notesRepository.updateNote(new Note(note.getTitle(),note.getSubTitle(),note.getDescription(),
                 DateTimeUtils.getCurrentEpoch(),mNoteId));
         navigateOnNoteSaved();
     }
@@ -130,7 +132,6 @@ public class AddEditNoteViewModel extends AndroidViewModel {
 
         @Override
         public <T extends ViewModel> T create(Class<T> modelClass) {
-            //noinspection unchecked
             return (T) new AddEditNoteViewModel(application, notesRepository);
         }
     }

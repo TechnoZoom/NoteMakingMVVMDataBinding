@@ -20,6 +20,7 @@ public class FakeNotesSource implements NotesDataSource {
     private static final Map<String, Note> NOTES_SERVICE_DATA = new LinkedHashMap<>();
 
     private static String FAKE_NOTE_TITLE_1 = "FAKE TITLE 1";
+    private static String FAKE_NOTE_SUB_TITLE_1 = "FAKE SUB TITLE 1";
     private static String FAKE_NOTE_DESC_1 = "FAKE DESC 1";
 
     public static String FAKE_NOTE_UPDATED_TITLE = "FAKE NOTE UPDATED TITLE";
@@ -72,18 +73,18 @@ public class FakeNotesSource implements NotesDataSource {
         }
     }
 
-    public static Note createAndFetchFakeNote(String title, String desc) {
-        return new Note(title,desc,System.currentTimeMillis());
+    public static Note createAndFetchFakeNote(String title, String subTitle, String desc) {
+        return new Note(title,subTitle,desc,System.currentTimeMillis());
     }
 
     public static Note fetchFakeNote() {
-        return new Note(FAKE_NOTE_TITLE_1, FAKE_NOTE_DESC_1,System.currentTimeMillis());
+        return new Note(FAKE_NOTE_TITLE_1, FAKE_NOTE_SUB_TITLE_1, FAKE_NOTE_DESC_1,System.currentTimeMillis());
     }
 
     public static List<Note> getFakeNotes(int size) {
         List<Note> noteList = new ArrayList<Note>();
         for(int i = 1; i <= size; i++ ) {
-            Note note = new Note("Title " + i,"Desc " + i, System.currentTimeMillis());
+            Note note = new Note("Title " + i,"SubTitle " + i,"Desc " + i, System.currentTimeMillis());
             noteList.add(note);
         }
         return noteList;

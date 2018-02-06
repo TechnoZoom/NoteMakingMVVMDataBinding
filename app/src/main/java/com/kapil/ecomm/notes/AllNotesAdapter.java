@@ -63,6 +63,8 @@ public class AllNotesAdapter extends RecyclerView.Adapter<AllNotesAdapter.NotesV
 
         holder.getDescTextView().setText(note.getDescription());
         holder.getTileTextView().setText(note.getTitle());
+        String subTitle = note.getSubTitle() == null ? context.getString(R.string.default_sub_title) : note.getSubTitle();
+        holder.getSubTitleTextView().setText(subTitle);
         holder.getTimeTextView().setText(DateTimeUtils.getHumanReadableDate(note.getDatetime()));
     }
 
@@ -71,6 +73,7 @@ public class AllNotesAdapter extends RecyclerView.Adapter<AllNotesAdapter.NotesV
         private TextView tileTextView;
         private TextView descTextView;
         private TextView timeTextView;
+        private TextView subTitleTextView;
         private View rowView;
         private Button deleteButton;
 
@@ -80,6 +83,7 @@ public class AllNotesAdapter extends RecyclerView.Adapter<AllNotesAdapter.NotesV
             descTextView = (TextView) rowView.findViewById(R.id.note_desc_text_view);
             timeTextView = (TextView) rowView.findViewById(R.id.note_time_text_view);
             deleteButton = (Button) rowView.findViewById(R.id.delete_note_button);
+            subTitleTextView = (TextView) rowView.findViewById(R.id.note_sub_title_text_view);
             this.rowView = rowView;
         }
 
@@ -101,6 +105,10 @@ public class AllNotesAdapter extends RecyclerView.Adapter<AllNotesAdapter.NotesV
 
         public Button getDeleteButton() {
             return deleteButton;
+        }
+
+        public TextView getSubTitleTextView() {
+            return subTitleTextView;
         }
 
     }

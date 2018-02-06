@@ -45,7 +45,7 @@ public class AllNotesActivityTest {
     public void setUp() {
         TestMyApplication testMyApplication = (TestMyApplication) InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
         testMyApplication.getTestAppComponent().inject(this);
-        Note note = new Note("Mock Waaala Note", "Mocking Successfull",1502363598964L);
+        Note note = new Note("Mock Waaala Note", "Mock SubTitle","Mocking Successfull",1502363598964L);
         FakeNotesSource.getInstance().addNotes(note);
         mActivityTestRule.launchActivity(null);
     }

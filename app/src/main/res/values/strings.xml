@@ -19,4 +19,6 @@
     <string name="title_activity_order_received">Order Received</string>
     <string name="order_received">Order Received</string>
     <string name="some_error_ocurred">Some Error Ocurred</string>
+    <string name="note_sub_title">Sub Title</string>
+    <string name="default_sub_title">You can now enter the sub title</string>
 </resources>
