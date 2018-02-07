@@ -1,11 +1,11 @@
-package com.kapil.ecomm.db;
+package com.kapil.ecomm.db.daos;
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule;
 import android.arch.persistence.room.Room;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.kapil.ecomm.LiveDataTestUtil;
+import com.kapil.ecomm.util.LiveDataTestUtil;
 import com.kapil.ecomm.data.source.local.AppDatabase;
 import com.kapil.ecomm.data.source.local.daos.NotesDao;
 import com.kapil.ecomm.data.source.local.entities.Note;
@@ -76,7 +76,7 @@ public class NotesDaoTest {
         notesDao.update(note);
         assertEquals(1, LiveDataTestUtil.getValue(notesDao.getAllNotes()).size());
         assertEquals(FakeNotesSource.FAKE_NOTE_UPDATED_TITLE,
-                LiveDataTestUtil.getValue(notesDao.getNoteById(note.getId())).getNoteTitle());
+                LiveDataTestUtil.getValue(notesDao.getNoteById(note.getNotesId())).getNoteTitle());
     }
 
     @Test
@@ -86,7 +86,7 @@ public class NotesDaoTest {
             notesDao.insert(note);
         });
         notesDao.deleteNote(noteList.get(2));
-        assertNull(LiveDataTestUtil.getValue(notesDao.getNoteById(noteList.get(2).getId())));
+        assertNull(LiveDataTestUtil.getValue(notesDao.getNoteById(noteList.get(2).getNotesId())));
      }
 
 }

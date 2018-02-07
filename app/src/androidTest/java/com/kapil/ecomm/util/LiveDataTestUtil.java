@@ -1,4 +1,4 @@
-package com.kapil.ecomm;
+package com.kapil.ecomm.util;
 
 /**
  * Created by kapilbakshi on 03/02/18.

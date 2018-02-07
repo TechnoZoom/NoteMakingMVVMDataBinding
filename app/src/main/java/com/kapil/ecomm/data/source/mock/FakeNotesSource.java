@@ -46,12 +46,12 @@ public class FakeNotesSource implements NotesDataSource {
 
     @Override
     public void saveNote(@NonNull Note note) {
-        NOTES_SERVICE_DATA.put(note.getId(), note);
+        NOTES_SERVICE_DATA.put(note.getNotesId(), note);
     }
 
     @Override
     public void updateNote(@NonNull Note note) {
-        NOTES_SERVICE_DATA.put(note.getId(), note);
+        NOTES_SERVICE_DATA.put(note.getNotesId(), note);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class FakeNotesSource implements NotesDataSource {
     public void addNotes(Note... notes) {
         if (notes != null) {
             for (Note task : notes) {
-                NOTES_SERVICE_DATA.put(task.getId(), task);
+                NOTES_SERVICE_DATA.put(task.getNotesId(), task);
             }
         }
     }

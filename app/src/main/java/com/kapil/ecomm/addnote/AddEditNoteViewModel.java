@@ -110,7 +110,7 @@ public class AddEditNoteViewModel extends AndroidViewModel {
         if (isNewNote()) {
             throw new RuntimeException("updateNote() was called but note is new.");
         }
-        notesRepository.updateNote(new Note(note.getTitle(),note.getSubTitle(),note.getDescription(),
+        notesRepository.updateNote(new Note(note.getNoteTitle(),note.getSubTitle(),note.getNoteDesc(),
                 DateTimeUtils.getCurrentEpoch(),mNoteId));
         navigateOnNoteSaved();
     }

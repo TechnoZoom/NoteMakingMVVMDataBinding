@@ -46,22 +46,6 @@ public class Note {
         this.subTitle = subTitle;
     }
 
-    public String getId() {
-        return notesId;
-    }
-
-    public String getTitle() {
-        return noteTitle;
-    }
-
-    public String getDescription() {
-        return noteDesc;
-    }
-
-    public long getDatetime() {
-        return noteDateTime;
-    }
-
 
     public boolean isEmpty() {
         return (noteTitle == null || noteTitle.isEmpty())  ||

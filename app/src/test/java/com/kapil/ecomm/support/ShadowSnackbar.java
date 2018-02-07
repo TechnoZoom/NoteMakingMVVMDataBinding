@@ -80,7 +80,7 @@ public class ShadowSnackbar {
             if (view instanceof CoordinatorLayout) {
                 return (ViewGroup) view;
             } else if (view instanceof FrameLayout) {
-                if (view.getId() == android.R.id.content) {
+                if (view.getNotesId() == android.R.id.content) {
                     return (ViewGroup) view;
                 } else {
                     fallback = (ViewGroup) view;

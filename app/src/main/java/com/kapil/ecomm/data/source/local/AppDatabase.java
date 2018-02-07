@@ -28,7 +28,7 @@ public abstract  class AppDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, DATABASE_NAME)
-                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                            .addMigrations(MIGRATION_1_2,MIGRATION_2_3)
                             .build();
                 }
             }
@@ -37,14 +37,14 @@ public abstract  class AppDatabase extends RoomDatabase {
     }
 
 
-    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+   public static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             // This is because we have migrated from SQLite to Room
         }
     };
 
-    static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+    public static final Migration MIGRATION_2_3 = new Migration(2, 3) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             database.execSQL("ALTER TABLE " + NotesPersistenceContract.TaskEntry.TABLE_NAME

@@ -48,7 +48,7 @@ public class AllNotesAdapter extends RecyclerView.Adapter<AllNotesAdapter.NotesV
         holder.getRowView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewModel.noteClicked(note.getId());
+                viewModel.noteClicked(note.getNotesId());
             }
         });
 
@@ -61,11 +61,11 @@ public class AllNotesAdapter extends RecyclerView.Adapter<AllNotesAdapter.NotesV
             }
         });
 
-        holder.getDescTextView().setText(note.getDescription());
-        holder.getTileTextView().setText(note.getTitle());
+        holder.getDescTextView().setText(note.getNoteDesc());
+        holder.getTileTextView().setText(note.getNoteTitle());
         String subTitle = note.getSubTitle() == null ? context.getString(R.string.default_sub_title) : note.getSubTitle();
         holder.getSubTitleTextView().setText(subTitle);
-        holder.getTimeTextView().setText(DateTimeUtils.getHumanReadableDate(note.getDatetime()));
+        holder.getTimeTextView().setText(DateTimeUtils.getHumanReadableDate(note.getNoteDateTime()));
     }
 
     class NotesViewHolder extends RecyclerView.ViewHolder {
