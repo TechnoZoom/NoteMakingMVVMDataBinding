@@ -49,7 +49,8 @@ public class Note {
 
     public boolean isEmpty() {
         return (noteTitle == null || noteTitle.isEmpty())  ||
-                (noteDesc == null || noteDesc.isEmpty());
+                (noteDesc == null || noteDesc.isEmpty()) ||
+                (subTitle == null || subTitle.isEmpty());
     }
 
     public String getNotesId() {

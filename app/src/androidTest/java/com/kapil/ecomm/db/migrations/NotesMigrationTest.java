@@ -43,36 +43,30 @@ public class NotesMigrationTest {
                     AppDatabase.class.getCanonicalName(),
                     new FrameworkSQLiteOpenHelperFactory());
 
-
-
     @Test
     public void onMigrationFrom2To3_CheckIf_NotesTableContainsCorrectData() throws IOException, InterruptedException {
         SupportSQLiteDatabase db = migrationTestHelper.createDatabase(TEST_DB_NAME, 2);
         List<Note> noteList = FakeNotesSource.getFakeNotes(5);
 
         noteList.forEach(note -> {
-            insertNote(note,db);
+            insertNote(note, db);
         });
-        //Prepare for the next version
         db.close();
 
-        // Re-open the database with version 3 and provide MIGRATION_1_2 and
-        // MIGRATION_2_3 as the migration process.
+        //Re-Open Database in version 3 by providing the necessary migrations and validate the schema
         migrationTestHelper.runMigrationsAndValidate(TEST_DB_NAME, 3, true,
                 MIGRATION_1_2, MIGRATION_2_3);
 
-        // MigrationTestHelper automatically verifies the schema changes, but not the data validity
-        // Validate that the data was migrated properly.
-        AppDatabase appDatabase = (AppDatabase) MigrationUtil.getDatabaseAfterPerformingMigrations(migrationTestHelper,AppDatabase.class,TEST_DB_NAME,
+        AppDatabase appDatabase = (AppDatabase) MigrationUtil.getDatabaseAfterPerformingMigrations(migrationTestHelper, AppDatabase.class, TEST_DB_NAME,
                 MIGRATION_1_2, MIGRATION_2_3);
 
+        //Now checking if the new database contains the correctly exported data from the previous database
         NotesDao migratedDataNotesDao = appDatabase.notesDao();
         assertEquals(LiveDataTestUtil.getValue(migratedDataNotesDao.getNoteById(noteList.get(3).getNotesId())).getNoteDesc(),
                 noteList.get(3).getNoteDesc());
         assertNull(LiveDataTestUtil.getValue(migratedDataNotesDao.getNoteById(noteList.get(3).getNotesId())).getSubTitle());
         appDatabase.close();
     }
-
 
     private void insertNote(Note note, SupportSQLiteDatabase db) {
         ContentValues values = new ContentValues();
@@ -82,5 +76,4 @@ public class NotesMigrationTest {
         values.put(NotesPersistenceContract.TaskEntry.COLUMN_DATE_TIME, note.getNoteDateTime());
         db.insert(NotesPersistenceContract.TaskEntry.TABLE_NAME, SQLiteDatabase.CONFLICT_REPLACE, values);
     }
-
 }
